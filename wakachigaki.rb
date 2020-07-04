@@ -1,0 +1,14 @@
+# encoding: Shift_JIS
+require 'natto'
+require 'nkf'
+mecab = Natto::MeCab.new(output_format_type: :wakati)
+filename = gets.chomp.to_s.encode(Encoding::Shift_JIS) #‚±‚±‚Å“ü—Í‚µ‚½•¶šƒR[ƒh‚ğwindows-31J‚©‚çutf-8‚É•ÏŠ·‚µ‚½‚¢
+File.open("Œ‹‡Œ‹‰Ê_" + filename + ".log","r",:encoding => Encoding::Shift_JIS, :invalid => :replace, :undef => :replace) do |io|
+  File.open("•ª‚©‚¿‘‚«_" + filename + ".txt", "w") do |f|
+    io.each_line do |line|
+      episode = line.chomp
+      result_str = mecab.parse(episode).encode("Shift_JIS")
+      puts result_str.encoding
+    end
+  end
+end
